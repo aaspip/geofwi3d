@@ -73,9 +73,6 @@ data_list = [image1, vp1, rgt1, fault1]
 titles = ["Seismic image", "Velocity model", "Relative geologic time", "Fault model"]
 cmaps = ["gray", "jet", "viridis", "jet"]
 
-ix, iy, iz = 0, 0, 0
-x_coords, y_coords, z_coords = np.arange(shape[0]), np.arange(shape[1]), np.arange(shape[2])
-
 for ax, data, title, cmap_name in zip(axes, data_list, titles, cmaps):
     ax.set_title(title, fontsize=16, fontweight="bold", pad=15)
     plt.sca(ax)
