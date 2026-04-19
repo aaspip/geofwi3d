@@ -56,69 +56,53 @@ Folder names use four-digit zero padding: `model_0000`, `model_0001`, …
 ## Quick start
 
 1. Install Python dependencies used by the example notebook: NumPy, Matplotlib, and scikit-image (for `marching_cubes`).
-2. Run Jupyter with working directory [`quick_start/`](quick_start/) so `from plotting import plot3d` works. Open [`read_data.ipynb`](quick_start/read_data.ipynb): it defines `read_models`, sets `data_root` / `model_folders` / `shape`, and walks through loading and plotting.
+2. Run Jupyter with working directory [`quick_start/`](quick_start/) so `from plotting import plot3d` works. Open [`read_data.ipynb`](quick_start/read_data.ipynb): it defines `read_models` and `plot_all_models`, sets `data_root` / `model_folders` / `shape`, and walks through loading and plotting.
 
 ```python
-image1, vp1, rgt1, fault1 = read_models(data_root, model_folders, 1872)
-
-fig, ax = plt.subplots(
-    2, 2,
-    figsize=(10, 10),
-    subplot_kw={"projection": "3d"},
-    constrained_layout=True,
+plot_all_models(
+    data_root, 
+    model_folders, 
+    9177, 
+    "Salt model with faults",
+    save_path="../gallery/salt_fault_model.png"
 )
-axes = ax.ravel()
+```
 
-data_list = [image1, vp1, rgt1, fault1]
-titles = ["Seismic image", "Velocity model", "Relative geologic time", "Fault model"]
-cmaps = ["gray", "jet", "viridis", "jet"]
+![Model 9177 — seismic image, velocity, RGT, and fault models](./gallery/salt_fault_model.png)
 
-for ax, data, title, cmap_name in zip(axes, data_list, titles, cmaps):
-    ax.set_title(title, fontsize=16, fontweight="bold", pad=15)
-    plt.sca(ax)
-    plot3d(
-        data.T,
-        cmap=cmap_name,
-        frames=[45, 73, 60],
-        ifnewfig=False,
-        showf=False,
-        close=False,
-        ifinside=False,
-    )
+`fault3d.bin` stores a **fault index** per voxel. To plot a single fault (here index `5`):
 
+```python
+image, vp, rgt, fault, salt = read_models(data_root, model_folders, 9177)
+fault_mask = fault.T == 5
+plot3d(
+    fault_mask.astype(np.float32),
+    cmap='Reds',
+    frames=[45, 45, 46],
+    ifnewfig=True,  
+    showf=False,     
+    close=False,     
+    ifinside=False,
+    figname="../gallery/fault_mask_5.png"
+)
 plt.show()
 ```
 
-![Model 1872 — seismic image, velocity, RGT, and fault models](./gallery/salt_fault_model.png)
-
-`fault3d.bin` stores a **fault index** per voxel. To plot a single fault (here index `3`):
-
-```python
-fault_mask = fault1.T == 3
-plot3d(
-    fault_mask.astype(np.float32),
-    cmap="Reds",
-    frames=[25, 73, 12],
-    ifnewfig=True,
-    showf=False,
-    close=False,
-    ifinside=False,
-)
-```
-
-![Fault index 3 mask (same model as above)](./gallery/fault_mask_3.png)
+![Fault index 5 mask (same model as above)](./gallery/fault_mask_5.png)
 
 Salt bodies have **RGT = 0** in `rgt3d.bin`. Mask and plot with:
 
 ```python
-salt_mask = rgt1.T == 0
+salt_mask = rgt == 0
+salt_mask = salt_mask.astype(np.float32)
 plot3d(
-    salt_mask.astype(np.float32),
+    salt_mask.T,
     cmap='Reds',
-    frames=[45, 73, 60],
-    ifnewfig=True,
-    figname="./gallery/salt_mask.png",
+    frames=[45, 45, 46],
+    ifnewfig=True,   
+    figname="../gallery/salt_mask.png"
 )
+plt.show()
 ```
 
 ![Salt mask](./gallery/salt_mask.png)
