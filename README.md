@@ -58,6 +58,46 @@ Folder names use four-digit zero padding: `model_0000`, `model_0001`, …
 1. Install Python dependencies used by the example notebook: NumPy, Matplotlib, and scikit-image (for `marching_cubes`).
 2. Run Jupyter with working directory [`quick_start/`](quick_start/) so `from plotting import plot3d` works. Open [`read_data.ipynb`](quick_start/read_data.ipynb): it defines `read_models` and `plot_all_models`, sets `data_root` / `model_folders` / `shape`, and walks through loading and plotting.
 
+### Model categories from `parameters.csv`
+
+The repository includes [`parameters.csv`](parameters.csv), with one row per model and a key `sample_index` column matching folder names like `model_{sample_index:04d}`.
+
+Useful label columns for categorization:
+
+- `yn_fault`: 1 if model contains faults
+- `yn_salt`: 1 if model contains a salt body
+
+Example (from `quick_start/read_data.ipynb`) to build category index lists and select models:
+
+```python
+import csv
+from pathlib import Path
+
+with Path("../parameters.csv").open(newline="") as f:
+    rows = list(csv.DictReader(f))
+
+for r in rows:
+    r["sample_index"] = int(r["sample_index"])
+    r["yn_fault"] = int(float(r["yn_fault"]))
+    r["yn_salt"] = int(float(r["yn_salt"]))
+
+def select_indices(rows, **flag_equals):
+    return [
+        r["sample_index"]
+        for r in rows
+        if all(int(r[k]) == int(v) for k, v in flag_equals.items())
+    ]
+
+layered_indices = select_indices(rows, yn_fault=0, yn_salt=0)
+fault_indices = select_indices(rows, yn_fault=1, yn_salt=0)
+salt_indices = select_indices(rows, yn_salt=1, yn_fault=0)
+fault_and_salt_indices = select_indices(rows, yn_fault=1, yn_salt=1)
+
+idx = salt_indices[0]
+image, vp, rgt, fault, salt = read_models(data_root, model_folders, idx)
+```
+
+### Salt + Fault model
 ```python
 plot_all_models(
     data_root, 
@@ -70,6 +110,7 @@ plot_all_models(
 
 ![Model 9177 — seismic image, velocity, RGT, and fault models](./gallery/salt_fault_model.png)
 
+### Fault mask
 `fault3d.bin` stores a **fault index** per voxel. To plot a single fault (here index `5`):
 
 ```python
@@ -88,6 +129,7 @@ plot3d(
 plt.show()
 ```
 
+### Salt mask
 ![Fault index 5 mask (same model as above)](./gallery/fault_mask_5.png)
 
 Salt bodies have **RGT = 0** in `rgt3d.bin`. Mask and plot with:
