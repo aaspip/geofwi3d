@@ -7,6 +7,18 @@ This folder contains experiments for **3D fault segmentation** from seismic volu
 
 In both training pipelines, any nonzero fault label is converted to `1`, so the model learns **fault vs. non-fault**, not the original fault index IDs.
 
+## Environment setup
+
+Create the Conda environment from `env.yml` before running the training scripts or `prediction.ipynb`:
+
+```bash
+cd fault_segmentation
+conda env create -f env.yml
+conda activate faultseg3d
+```
+
+`env.yml` defines the environment name as `faultseg3d` and includes the TensorFlow / CUDA stack used by these experiments.
+
 ## What each directory does
 
 ### `faultSeg3d/`
