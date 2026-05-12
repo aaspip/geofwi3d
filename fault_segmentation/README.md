@@ -84,4 +84,4 @@ For the `geofwi3d/` experiment, the intended workflow is:
 
 ## Comparison of model prediction on F3 data
 
-![F3 Prediction](./f3-pred.png)
+![F3 Prediction](./f3-pred3d.png)
