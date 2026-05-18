@@ -11,7 +11,7 @@ Large-scale 3D velocity models for deep-learning full waveform inversion (FWI) a
 | File | Contents |
 |------|----------|
 | `vp3d.bin` | P-wave velocity |
-| `image3d.bin` | Seismic image |
+| `image3d.bin` | Synthetic p-reflectivity |
 | `rgt3d.bin` | Relative geologic time (RGT) |
 | `fault3d.bin` | Fault index mask |
 
