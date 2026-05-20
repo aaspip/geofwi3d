@@ -2,7 +2,7 @@
 Simultaneous synthetic Salt segmentation and RGT predition using the SaltRGT3DNet
 
 ```
-@ author Liuqing Yang, Upsalla University
+@author Liuqing Yang, Uppsala University
 ```
 
 
