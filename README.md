@@ -4,6 +4,25 @@ Large-scale 3D velocity models for deep-learning full waveform inversion (FWI) a
 
 ![Four representative models from the GeoFWI3D dataset](./gallery/geofwi3d_models.png)
 
+# Citation
+
+If you use the **GeoFWI3D** dataset in your research, please cite:
+
+```bibtex
+@misc{geofwi3d,
+  author    = {Swaminadhan, Sujith and Shen, Yiran and Li, Chao and Gao, Kai and Chen, Ting and Fomel, Sergey and Agbaje, Tolulope and Cui, Yang and Yang, Liuqing and Lee, Jaewook and Dommisse, Robin and Waheed, Umair bin and Sen, Mrinal and Chen, Yangkang},
+  title     = {GeoFWI3D: Large-scale 3D Velocity Model Dataset for Deep Learning-assisted Seismic Imaging},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.20148778},
+  url       = {https://doi.org/10.5281/zenodo.20148778},
+  note      = {Dataset}
+}
+```
+
+**Dataset:** [GeoFWI3D: Large-scale 3D Velocity Model Dataset for Deep Learning-assisted Seismic Imaging](https://doi.org/10.5281/zenodo.20148778)
+
+
 ## Overview
 
 **GeoFWI3D** provides many synthetic 3D Earth models, each stored as raw `float32` (little-endian) binaries. Per model you get:
@@ -146,6 +165,7 @@ plot3d(
 )
 plt.show()
 ```
+
 
 ![Salt mask](./gallery/salt_mask.png)
 
