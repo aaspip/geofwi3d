@@ -1,16 +1,36 @@
 # GeoFWI3D
+[![arXiv](https://img.shields.io/badge/arXiv-2610.01033-b31b1b.svg)](https://arxiv.org/abs/2610.01033)
+[![Dataset](https://img.shields.io/badge/Dataset-Zenodo-1682D4.svg)](https://doi.org/10.5281/zenodo.20148778)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20148778.svg)](https://doi.org/10.5281/zenodo.20148778)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 Large-scale 3D velocity models for deep-learning full waveform inversion (FWI) and other seismic processing workflows.
 
-![Four representative models from the GeoFWI3D dataset](./gallery/geofwi3d_models.png)
+Four representative models from the GeoFWI3D dataset
+
+The accompanying article is available on [arXiv](https://arxiv.org/abs/2610.01033).
 
 # Citation
 
-If you use the **GeoFWI3D** dataset in your research, please cite:
+If you use the **GeoFWI3D** dataset in your research, please cite the accompanying article:
 
 ```bibtex
 @misc{geofwi3d,
-  author    = {Swaminadhan, Sujith and Shen, Yiran and Li, Chao and Gao, Kai and Chen, Ting and Fomel, Sergey and Agbaje, Tolulope and Cui, Yang and Yang, Liuqing and Lee, Jaewook and Dommisse, Robin and Waheed, Umair bin and Sen, Mrinal and Chen, Yangkang},
+      title={GeoFWI3D: Large-scale 3D Velocity Model Dataset for Deep Learning-assisted Seismic Imaging}, 
+      author={Sujith Swaminadhan and Yiran Shen and Chao Li and Kai Gao and Ting Chen and Sergey Fomel and Tolulope Agbaje and Yang Cui and Liuqing Yang and Jaewook Lee and Robin Dommisse and Umair bin Waheed and Mrinal K. Sen and Yangkang Chen},
+      year={2026},
+      eprint={2610.01033},
+      archivePrefix={arXiv},
+      primaryClass={physics.geo-ph},
+      url={https://arxiv.org/abs/2610.01033}, 
+}
+```
+
+The dataset can also be cited:
+
+```bibtex
+@misc{geofwi3d-dataset,
+  author    = {Swaminadhan, Sujith and Shen, Yiran and Li, Chao and Gao, Kai and Chen, Ting and Fomel, Sergey and Agbaje, Tolulope and Cui, Yang and Yang, Liuqing and Lee, Jaewook and Dommisse, Robin and Waheed, Umair bin and Sen, Mrinal K. and Chen, Yangkang},
   title     = {GeoFWI3D: Large-scale 3D Velocity Model Dataset for Deep Learning-assisted Seismic Imaging},
   year      = {2026},
   publisher = {Zenodo},
@@ -22,27 +42,53 @@ If you use the **GeoFWI3D** dataset in your research, please cite:
 
 **Dataset:** [GeoFWI3D: Large-scale 3D Velocity Model Dataset for Deep Learning-assisted Seismic Imaging](https://doi.org/10.5281/zenodo.20148778)
 
-
 ## Overview
 
-**GeoFWI3D** provides many synthetic 3D Earth models, each stored as raw `float32` (little-endian) binaries. Per model you get:
+**GeoFWI3D** is a large-scale dataset of synthetic, geologically diverse 3D
+subsurface models designed for deep-learning-assisted full waveform inversion
+(FWI), seismic imaging, and related seismic processing tasks.
 
-| File | Contents |
-|------|----------|
-| `vp3d.bin` | P-wave velocity |
-| `image3d.bin` | Synthetic p-reflectivity |
-| `rgt3d.bin` | Relative geologic time (RGT) |
-| `fault3d.bin` | Fault index mask |
+The primary dataset contains **10,000 models with dimensions 96 × 96 × 96**.
+An additional collection of higher-resolution **256 × 256 × 256** models is
+also provided.
 
-Each volume has shape **96 × 96 × 96** in **(X, Y, Z)** order. On disk the layout is contiguous C-order over those dimensions.
+
+| File          | Contents                     |
+| ------------- | ---------------------------- |
+| `vp3d.bin`    | P-wave velocity              |
+| `image3d.bin` | Synthetic p-reflectivity     |
+| `rgt3d.bin`   | Relative geologic time (RGT) |
+| `fault3d.bin` | Fault index mask             |
+
+
+The binary arrays are stored contiguously in C order.
 
 ## Download
 
-Compressed archives are hosted on Box:
+The dataset is available through both Zenodo and Box.
 
-[Download GeoFWI3D data](https://utexas.box.com/s/ybzgil0u3hvgusoc27bechxibyck88jr)
+- [Zenodo](https://doi.org/10.5281/zenodo.20148778)
+- [Box download](https://utexas.box.com/s/ybzgil0u3hvgusoc27bechxibyck88jr)
 
-Each `models_batch_*.tar.gz` contains **1000** models. Place the archive files in the same directory as this repository, then extract.
+### 96 × 96 × 96 models
+
+The primary dataset with **10,000** models is distributed as:
+
+```text
+models_batch_*.tar.gz
+```
+
+Each archive contains **1,000** models.
+
+### 256 × 256 × 256 models
+
+The high-resolution dataset with **2,000** models are distributed as:
+
+```text
+models_256_batch_*.tar.gz
+```
+
+Each archive contains **400** models.
 
 ## Extract
 
@@ -52,7 +98,7 @@ From the repository root:
 ./extract_models.sh
 ```
 
-This creates `allmodels/` and extracts every `models_batch_*.tar.gz` into it.
+By default this creates `allmodels/` and extracts every 96 x 96 x96 models into it. To extract large models uncomment the corresponding lines at the bottom.
 
 ## Directory layout
 
@@ -68,6 +114,14 @@ allmodels/
 ├── model_0001/
 │   └── ...
 └── ...
+
+allmodels_256/
+├── model_0000/
+│   ├── image3d.bin
+│   ├── vp3d.bin
+│   ├── rgt3d.bin
+│   └── fault3d.bin
+└── ...
 ```
 
 Folder names use four-digit zero padding: `model_0000`, `model_0001`, …
@@ -75,11 +129,17 @@ Folder names use four-digit zero padding: `model_0000`, `model_0001`, …
 ## Quick start
 
 1. Install Python dependencies used by the example notebook: NumPy, Matplotlib, and scikit-image (for `marching_cubes`).
-2. Run Jupyter with working directory [`quick_start/`](quick_start/) so `from plotting import plot3d` works. Open [`read_data.ipynb`](quick_start/read_data.ipynb): it defines `read_models` and `plot_all_models`, sets `data_root` / `model_folders` / `shape`, and walks through loading and plotting.
+2. Run Jupyter with working directory `[quick_start/](quick_start/)` so `from plotting import plot3d` works. Open `[read_data.ipynb](quick_start/read_data.ipynb)`: it defines `read_models` and `plot_all_models`, sets `data_root` / `model_folders` / `shape`, and walks through loading and plotting.
+3. For large models set the shape to `shape = (256, 256, 256)` and use `parameters_256.csv`
 
 ### Model categories from `parameters.csv`
 
-The repository includes [`parameters.csv`](parameters.csv), with one row per model and a key `sample_index` column matching folder names like `model_{sample_index:04d}`.
+The repository includes 
+
+- `[parameters.csv](parameters.csv)` - 96 × 96 × 96 models
+- `[parameters_256.csv](parameters_256.csv)` - 256 × 256 × 256 models
+
+Both files contain key `sample_index` column mapping folder names such as `model_{sample_index:04d}`.
 
 Useful label columns for categorization:
 
@@ -117,6 +177,7 @@ image, vp, rgt, fault, salt = read_models(data_root, model_folders, idx)
 ```
 
 ### Salt + Fault model
+
 ```python
 plot_all_models(
     data_root, 
@@ -127,9 +188,10 @@ plot_all_models(
 )
 ```
 
-![Model 9177 — seismic image, velocity, RGT, and fault models](./gallery/salt_fault_model.png)
+Model 9177 — seismic image, velocity, RGT, and fault models
 
 ### Fault mask
+
 `fault3d.bin` stores a **fault index** per voxel. To plot a single fault (here index `5`):
 
 ```python
@@ -149,7 +211,8 @@ plt.show()
 ```
 
 ### Salt mask
-![Fault index 5 mask (same model as above)](./gallery/fault_mask_5.png)
+
+Fault index 5 mask (same model as above)
 
 Salt bodies have **RGT = 0** in `rgt3d.bin`. Mask and plot with:
 
@@ -166,11 +229,17 @@ plot3d(
 plt.show()
 ```
 
+Salt mask
 
-![Salt mask](./gallery/salt_mask.png)
+3D salt mask
 
-![3D salt mask](./gallery/salt_body_rotation.gif)
+
+## License
+
+The GeoFWI3D dataset is released under the
+
+[Creative Commons Attribution 4.0 International (CC BY 4.0)]([https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)).
 
 ---
 
-*Plotting helpers in `quick_start/plotting.py` are adapted from pyseistr (https://github.com/aaspip/pyseistr) utilities.*
+*Plotting helpers in `quick_start/plotting.py` are adapted from pyseistr ([https://github.com/aaspip/pyseistr](https://github.com/aaspip/pyseistr)) utilities.*
