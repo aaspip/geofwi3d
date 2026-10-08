@@ -2,11 +2,11 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2610.01033-b31b1b.svg)](https://arxiv.org/abs/2610.01033)
 [![Dataset](https://img.shields.io/badge/Dataset-Zenodo-1682D4.svg)](https://doi.org/10.5281/zenodo.20148778)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20148778.svg)](https://doi.org/10.5281/zenodo.20148778)
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![License](https://img.shields.io/badge/Dataset_License-CC_BY_4.0-blue.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 Large-scale 3D velocity models for deep-learning full waveform inversion (FWI) and other seismic processing workflows.
 
-Four representative models from the GeoFWI3D dataset
+![Four representative models from the GeoFWI3D dataset](./gallery/geofwi3d_models.png)
 
 The accompanying article is available on [arXiv](https://arxiv.org/abs/2610.01033).
 
@@ -188,7 +188,7 @@ plot_all_models(
 )
 ```
 
-Model 9177 — seismic image, velocity, RGT, and fault models
+![Model 9177 — seismic image, velocity, RGT, and fault models](./gallery/salt_fault_model.png)
 
 ### Fault mask
 
@@ -212,7 +212,7 @@ plt.show()
 
 ### Salt mask
 
-Fault index 5 mask (same model as above)
+![Fault index 5 mask (same model as above)](./gallery/fault_mask_5.png)
 
 Salt bodies have **RGT = 0** in `rgt3d.bin`. Mask and plot with:
 
@@ -229,9 +229,9 @@ plot3d(
 plt.show()
 ```
 
-Salt mask
+![Salt mask](./gallery/salt_mask.png)
 
-3D salt mask
+![3D salt mask](./gallery/salt_body_rotation.gif)
 
 
 ## License
