@@ -98,7 +98,7 @@ From the repository root:
 ./extract_models.sh
 ```
 
-By default, this creates `allmodels/` and extracts every 96 x 96 x96 models into it. If the larger 256 x 256 x 256 model archives are present in the directory, the script will automatically detect them, create an allmodels_256/ folder, and extract them there as well
+By default, this creates `allmodels/` and extracts every 96 x 96 x96 models into it. If the larger 256 x 256 x 256 model archives are present in the directory, the script will automatically detect them, create an allmodels_256/ folder, and extract them there as well. If you have `pigz` installed, you can speed up extraction by replacing `tar -xzf` with `tar -I pigz -xf`.
 
 ## Directory layout
 
