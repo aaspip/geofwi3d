@@ -59,6 +59,7 @@ also provided.
 | `image3d.bin` | Synthetic p-reflectivity     |
 | `rgt3d.bin`   | Relative geologic time (RGT) |
 | `fault3d.bin` | Fault index mask             |
+| `karst3d.bin` | karst mask                   |
 
 
 The binary arrays are stored contiguously in C order.
@@ -137,8 +138,8 @@ Folder names use four-digit zero padding: `model_0000`, `model_0001`, …
 
 The repository includes 
 
-- `[parameters.csv](parameters.csv)` - 96 × 96 × 96 models
-- `[parameters_256.csv](parameters_256.csv)` - 256 × 256 × 256 models
+- `[parameters.csv](./parameters.csv)` - 96 × 96 × 96 models
+- `[parameters_256.csv](./parameters_256.csv)` - 256 × 256 × 256 models
 
 Both files contain key `sample_index` column mapping folder names such as `model_{sample_index:04d}`.
 
