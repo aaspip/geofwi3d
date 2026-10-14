@@ -138,8 +138,8 @@ Folder names use four-digit zero padding: `model_0000`, `model_0001`, …
 
 The repository includes 
 
-- `![parameters.csv](./parameters.csv)` - 96 × 96 × 96 models
-- `![parameters_256.csv](./parameters_256.csv)` - 256 × 256 × 256 models
+- ![`parameters.csv`](./parameters.csv) - 96 × 96 × 96 models
+- ![`parameters_256.csv`](./parameters_256.csv) - 256 × 256 × 256 models
 
 Both files contain key `sample_index` column mapping folder names such as `model_{sample_index:04d}`.
 
