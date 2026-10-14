@@ -234,6 +234,18 @@ plt.show()
 
 ![3D salt mask](./gallery/salt_body_rotation.gif)
 
+# 256 x 256 x 256 models
+
+In addition to the original 10,000 models at $96 \times 96 \times 96$ resolution, GeoFWI3D includes 3,000 larger models at $256 \times 256 \times 256$ resolution. These models are equally distributed across six geological classes, with 500 models per class: layered, faults, salt bodies, salt–fault structures, channels, and karsts.
+
+![256-classes](./gallery/models-256-classes.png)
+
+The channel and karst classes include additional structural subclasses:
+* Channels (4 subclasses): Meandering channels, meandering canyons, drainage channels, and drainage canyons (125 models each).
+* Karsts (2 subclasses): Karst structures without faults and karst structures combined with faults (250 models each).
+
+![256-subclasses](./gallery/models-256-subgroups.png)
+
 
 ## License
 
