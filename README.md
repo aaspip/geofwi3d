@@ -1,7 +1,7 @@
 # GeoFWI3D
 [![arXiv](https://img.shields.io/badge/arXiv-2610.01033-b31b1b.svg)](https://arxiv.org/abs/2610.01033)
-[![Dataset](https://img.shields.io/badge/Dataset-Zenodo-1682D4.svg)](https://doi.org/10.5281/zenodo.20148778)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20148778.svg)](https://doi.org/10.5281/zenodo.20148778)
+[![Hugging Face Dataset](https://img.shields.io/badge/Dataset-Hugging%20Face-F58025?flat&logo=huggingface&logoColor=white)](https://huggingface.co/datasets/mssujith/GeoFWI3D-dataset)
+[![Box Download](https://img.shields.io/badge/Box-Download-0061D5.svg?logo=box&logoColor=white)](https://utexas.box.com/s/ybzgil0u3hvgusoc27bechxibyck88jr)
 [![License](https://img.shields.io/badge/Dataset_License-CC_BY_4.0-blue.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 Large-scale 3D velocity models for deep-learning full waveform inversion (FWI) and other seismic processing workflows.
