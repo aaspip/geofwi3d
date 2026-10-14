@@ -65,9 +65,9 @@ The binary arrays are stored contiguously in C order.
 
 ## Download
 
-The dataset is available through both Zenodo and Box.
+The dataset is available through both Hugging Face and Box.
 
-- [Zenodo](https://doi.org/10.5281/zenodo.20148778)
+- [Hugging Face](https://huggingface.co/datasets/mssujith/GeoFWI3D-dataset/tree/main)
 - [Box download](https://utexas.box.com/s/ybzgil0u3hvgusoc27bechxibyck88jr)
 
 ### 96 × 96 × 96 models
@@ -82,13 +82,13 @@ Each archive contains **1,000** models.
 
 ### 256 × 256 × 256 models
 
-The high-resolution dataset with **2,000** models are distributed as:
+The high-resolution dataset with **3,000** models are distributed as:
 
 ```text
 models_256_batch_*.tar.gz
 ```
 
-Each archive contains **400** models.
+Each archive contains **300** models.
 
 ## Extract
 
@@ -98,7 +98,7 @@ From the repository root:
 ./extract_models.sh
 ```
 
-By default this creates `allmodels/` and extracts every 96 x 96 x96 models into it. To extract large models uncomment the corresponding lines at the bottom.
+By default, this creates `allmodels/` and extracts every 96 x 96 x96 models into it. If the larger 256 x 256 x 256 model archives are present in the directory, the script will automatically detect them, create an allmodels_256/ folder, and extract them there as well
 
 ## Directory layout
 
@@ -120,7 +120,8 @@ allmodels_256/
 │   ├── image3d.bin
 │   ├── vp3d.bin
 │   ├── rgt3d.bin
-│   └── fault3d.bin
+│   └── fault3d.bin  (if faulted model)
+│   └── karst3d.bin  (if karsts present)
 └── ...
 ```
 
