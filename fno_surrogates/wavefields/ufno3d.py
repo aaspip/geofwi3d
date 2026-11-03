@@ -1,10 +1,10 @@
 '''
 @author: Yang Cui, Uppsala University
-Modified U-FNO for 3D seismic wavefield prediction
+Modified U-FNO for source-to-wavefield prediction in a fixed velocity model
 '''
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+import torch.nn.functional as f
 
 import operator
 from functools import reduce
@@ -95,19 +95,14 @@ class SimpleBlock3d(nn.Module):
         # Fourier layers
         self.conv0 = SpectralConv3d(width, width, modes1, modes2, modes3)
         self.conv1 = SpectralConv3d(width, width, modes1, modes2, modes3)
-        self.conv2 = SpectralConv3d(width, width, modes1, modes2, modes3)
-        self.conv3 = SpectralConv3d(width, width, modes1, modes2, modes3)
         self.conv4 = SpectralConv3d(width, width, modes1, modes2, modes3)
         self.conv5 = SpectralConv3d(width, width, modes1, modes2, modes3)
         # Pointwise convs
         self.w0 = nn.Conv3d(width, width, 1)
         self.w1 = nn.Conv3d(width, width, 1)
-        self.w2 = nn.Conv3d(width, width, 1)
-        self.w3 = nn.Conv3d(width, width, 1)
         self.w4 = nn.Conv3d(width, width, 1)
         self.w5 = nn.Conv3d(width, width, 1)
         # U-NET refinements
-        self.unet3 = U_net(width, width)
         self.unet4 = U_net(width, width)
         self.unet5 = U_net(width, width)
         # Output projection
@@ -115,25 +110,48 @@ class SimpleBlock3d(nn.Module):
         self.fc2 = nn.Conv3d(128, out_channels, 1)
 
     def forward(self, x):
-        # x: [B, T, X, Y, Z]
+        # x: [B, 1, X, Y, Z], encoded source location
         x = self.fc0(x)
         x1 = self.conv0(x)
         x2 = self.w0(x)
-        x = F.gelu(x1 + x2)
+        x = f.gelu(x1 + x2)
         x1 = self.conv1(x)
         x2 = self.w1(x)
-        x = F.gelu(x1 + x2)
+        x = f.gelu(x1 + x2)
         # U-FNO layers
         x1 = self.conv4(x)
         x2 = self.w4(x)
         x3 = self.unet4(x)
-        x = F.gelu(x1 + x2 + x3)
+        x = f.gelu(x1 + x2 + x3)
         x1 = self.conv5(x)
         x2 = self.w5(x)
         x3 = self.unet5(x)
-        x = F.gelu(x1 + x2 + x3)
+        x = f.gelu(x1 + x2 + x3)
         # Projection
         x = self.fc1(x)
-        x = F.gelu(x)
+        x = f.gelu(x)
         x = self.fc2(x)
         return x
+
+
+# UFNO model
+
+class UFNO3d(nn.Module):
+    def __init__(self, modes1=12, modes2=12, modes3=12, width=32, in_channels=1, out_channels=20):
+        super().__init__()
+        self.model = SimpleBlock3d(modes1, modes2, modes3, width, in_channels, out_channels)
+
+    def forward(self, x):
+        """
+        Input:
+            [B, 1, X, Y, Z], encoded source location
+        Output:
+            [B, T, X, Y, Z], predicted wavefield snapshots
+        """
+        return self.model(x)
+
+    def count_params(self):
+        c = 0
+        for p in self.parameters():
+            c += reduce(operator.mul, list(p.size()))
+        return c
