@@ -29,14 +29,13 @@ If you use the **GeoFWI3D** dataset in your research, please cite the accompanyi
 The dataset can also be cited:
 
 ```bibtex
-@misc{geofwi3d-dataset,
-  author    = {Swaminadhan, Sujith and Shen, Yiran and Li, Chao and Gao, Kai and Chen, Ting and Fomel, Sergey and Agbaje, Tolulope and Cui, Yang and Yang, Liuqing and Lee, Jaewook and Dommisse, Robin and Waheed, Umair bin and Sen, Mrinal K. and Chen, Yangkang},
-  title     = {GeoFWI3D: Large-scale 3D Velocity Model Dataset for Deep Learning-assisted Seismic Imaging},
-  year      = {2026},
-  publisher = {Zenodo},
-  doi       = {10.5281/zenodo.20148778},
-  url       = {https://doi.org/10.5281/zenodo.20148778},
-  note      = {Dataset}
+@misc{sujith_swaminadhan_2026,
+	author       = { Sujith Swaminadhan and Yiran Shen and Chao Li and Kai Gao and Ting Chen and Sergey Fomel and Tolulope Agbaje and Yang Cui and Liuqing Yang and Jaewook Lee and Robin Dommisse and Umair bin Waheed and Mrinal K. Sen and Yangkang Chen },
+	title        = { GeoFWI3D-dataset (Revision fbce752) },
+	year         = 2026,
+	url          = { https://huggingface.co/datasets/mssujith/GeoFWI3D-dataset },
+	doi          = { 10.57967/hf/11817 },
+	publisher    = { Hugging Face }
 }
 ```
 
@@ -62,7 +61,7 @@ also provided.
 | `karst3d.bin` | karst mask                   |
 
 
-The binary arrays are stored contiguously in C order.
+The binary volumes are stored as contiguous 32-bit floating-point arrays. The original 96 x 96 x 96 models use C order, while the expanded 256 x 256 x 256 models use Fortran order.
 
 ## Download
 
@@ -233,7 +232,7 @@ plt.show()
 
 ![Salt mask](./gallery/salt_mask.png)
 
-![3D salt mask](./gallery/salt_body_rotation.gif)
+<!-- ![3D salt mask](./gallery/salt_body_rotation.gif) -->
 
 # 256 x 256 x 256 models
 
